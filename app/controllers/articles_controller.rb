@@ -18,24 +18,25 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     if @article.save
-      flash[:notice] = "Article was created successfully"
+      flash[:notice] = "Article was created successfully."
       redirect_to @article
     else
-      render :new, status: :unprocessable_entity
+      render 'new'
     end
   end
+
   def update
     if @article.update(article_params)
-      flash[:notice] = "Article was updated successfully"
+      flash[:notice] = "Article was updated successfully."
       redirect_to @article
     else
-      ender :update, status: :unprocessable_entity
+      render 'edit'
     end
   end
 
   def destroy
     @article.destroy
-    redirect_to articles_path , status: :see_other
+    redirect_to articles_path
   end
 
   private
@@ -43,7 +44,7 @@ class ArticlesController < ApplicationController
   def set_article
     @article = Article.find(params[:id])
   end
-  
+
   def article_params
     params.require(:article).permit(:title, :description)
   end
